@@ -3,6 +3,7 @@ import { userDocument, getUsersDocument } from "../../services/firebase";
 import { useDispatch } from "react-redux";
 import { toggleModal } from "../../redux/slices/modal";
 import { addUser } from "../../redux/slices/user-data";
+import "./form.css";
 
 const Form = ({ data }) => {
   const { id = "", name = "", email = "", gender = "", city = "" } = data || {};
@@ -45,6 +46,7 @@ const Form = ({ data }) => {
 
       <label htmlFor="name">Name</label>
       <input
+        className="modal_form"
         type="text"
         name="name"
         id="name"
@@ -55,6 +57,7 @@ const Form = ({ data }) => {
 
       <label htmlFor="email">Email</label>
       <input
+        className="modal_form"
         type="email"
         name="email"
         id="email"
@@ -65,6 +68,7 @@ const Form = ({ data }) => {
 
       <label htmlFor="gender">Gender</label>
       <input
+        className="modal_form"
         type="text"
         name="gender"
         id="gender"
@@ -75,6 +79,7 @@ const Form = ({ data }) => {
 
       <label htmlFor="city">City</label>
       <input
+        className="modal_form"
         type="text"
         name="city"
         id="city"
@@ -82,8 +87,7 @@ const Form = ({ data }) => {
         value={formFields.city}
       />
       <br />
-
-      <button onClick={FormHandler}>
+      <button className="form_btn" onClick={FormHandler}>
         {buttonType.charAt(0).toUpperCase() + buttonType.slice(1)}
       </button>
     </form>

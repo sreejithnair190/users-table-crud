@@ -33,7 +33,7 @@ const Modal = ({ modalType, data }) => {
   return (
     <>
       <button type="button" id={modalType} onClick={handleButtonClick}>
-        {modalType}
+        {modalType.charAt(0).toUpperCase() + modalType.slice(1)}
       </button>
       {modal && type && (
         <div className="modal">

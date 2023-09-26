@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUsersDocument } from "../../services/firebase";
 import { addUser } from "./../../redux/slices/user-data";
 import Modal from "../Modal/modal";
-
+import "./userTable.css";
 
 const UserRow = ({ data }) => {
   const { id, name, email, gender, city } = data;
@@ -39,7 +39,16 @@ const UserTable = () => {
   }, [dispatch]);
 
   return (
-    <table>
+    <table id="users">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Gender</th>
+          <th>City</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
       <tbody>
         {userData &&
           userData.map((data) => <UserRow key={data.id} data={data} />)}
