@@ -10,7 +10,7 @@ const Form = ({ data }) => {
   const buttonType = data ? "update" : "submit";
 
   const dispatch = useDispatch();
-  
+
   const formData = {
     id,
     name,
@@ -19,7 +19,27 @@ const Form = ({ data }) => {
     city,
   };
 
+  const [formDataErr, setFormDataErr ] = useState({});
   const [formFields, setFormFields] = useState(formData);
+
+
+  const validateForm = () => {
+    const newFormDataErr = {};
+  
+    Object.keys(formFields).forEach(key => {
+      if (key !== "id" && formFields[key].trim() === '') {
+        newFormDataErr[key] = "This field is required";
+      }
+    });
+  
+    setFormDataErr(newFormDataErr); 
+
+    if (Object.keys(newFormDataErr).length > 0) {
+      return false; 
+    }
+  
+    return true; 
+  };
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -28,6 +48,12 @@ const Form = ({ data }) => {
 
   const FormHandler = async (e) => {
     e.preventDefault();
+    
+    const isValid = validateForm();
+    if (!isValid) {
+      return;
+    }
+
     userDocument(formFields);
     dispatch(toggleModal());
 
@@ -35,9 +61,8 @@ const Form = ({ data }) => {
       const users = await getUsersDocument();
       dispatch(addUser(users));
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-    
   };
 
   return (
@@ -53,7 +78,7 @@ const Form = ({ data }) => {
         onChange={changeHandler}
         value={formFields.name}
       />
-      <br />
+      <span className="form_error">{formDataErr.name || ''}</span>
 
       <label htmlFor="email">Email</label>
       <input
@@ -64,18 +89,22 @@ const Form = ({ data }) => {
         onChange={changeHandler}
         value={formFields.email}
       />
-      <br />
+      <span className="form_error">{formDataErr.email || ''}</span>
 
       <label htmlFor="gender">Gender</label>
-      <input
+      <select
         className="modal_form"
-        type="text"
         name="gender"
         id="gender"
         onChange={changeHandler}
         value={formFields.gender}
-      />
-      <br />
+      >
+        {!formFields.gender && <option>Choose your gender</option>}
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      <span className="form_error">{formDataErr.gender || ''}</span>
 
       <label htmlFor="city">City</label>
       <input
@@ -86,7 +115,8 @@ const Form = ({ data }) => {
         onChange={changeHandler}
         value={formFields.city}
       />
-      <br />
+      <span className="form_error">{formDataErr.city || ''}</span>
+
       <button className="form_btn" onClick={FormHandler}>
         {buttonType.charAt(0).toUpperCase() + buttonType.slice(1)}
       </button>
