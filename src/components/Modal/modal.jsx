@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { toggleModal, setModalType } from "./../../redux/slices/modal";
+import { toggleModal } from "./../../redux/slices/modal";
 import "./modal.css";
 import Form from "../Form/form";
 import { useState } from "react";
@@ -13,11 +13,16 @@ const Modal = ({ modalType, data }) => {
 
   const handleButtonClick = (e) => {
     const targetId = e.target.id;
-    dispatch(toggleModal());
     if (modalTypes.includes(targetId)) {
       setType(targetId);
     }
+    dispatch(toggleModal());
   };
+
+  const handleCloseModal = (e) => {
+    setType("");
+    dispatch(toggleModal());
+  }
 
   if (modal) {
     document.body.classList.add("active-modal");
@@ -27,21 +32,21 @@ const Modal = ({ modalType, data }) => {
 
   return (
     <>
-      <button id={modalType} onClick={handleButtonClick}>
+      <button type="button" id={modalType} onClick={handleButtonClick}>
         {modalType}
       </button>
       {modal && type && (
         <div className="modal">
           <div className="overlay">
             <div className="modal-content">
-              {console.log("rendered")}
-              {type === modalTypes[0] && <Form data={data} />}
+              {type === modalTypes[0] && <Form  />}
               {type === modalTypes[1] && <Form data={data} />}
               {type === modalTypes[2] && <div>Delete</div>}
 
               <button
+                type="button"
                 className="close-modal"
-                onClick={() => dispatch(toggleModal())}
+                onClick={handleCloseModal}
               >
                 Close
               </button>

@@ -5,11 +5,7 @@ export const userDataSlice = createSlice({
     name:'userData',
     reducers: {
         addUser: (state , action) => {
-            // console.log("State: ");
-            // console.log(state);
-            // console.log("Action: ");
-            // console.log(action);
-            return action.payload
+            return action.payload;
         }
     }
 });

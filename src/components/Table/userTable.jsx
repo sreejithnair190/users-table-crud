@@ -23,14 +23,12 @@ const UserRow = ({ data }) => {
 
 const UserTable = () => {
   const userData = useSelector(state => state.userData);
-  // console.log(userData);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const users = await getUsersDocument();
-        console.log(users);
         dispatch(addUser(users));
       } catch (error) {
         console.error(error);

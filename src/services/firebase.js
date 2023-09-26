@@ -36,7 +36,6 @@ export const userDocument = async (userData) => {
       userData.id = docRef.id;
       const userDocRef = doc(usersCollection, docRef.id);
       await setDoc(userDocRef, userData);
-      console.log("success");
     } catch (error) {
       console.error("Error creating document: ", error);
     }

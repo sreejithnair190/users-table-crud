@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { userDocument } from "../../services/firebase";
+import { userDocument, getUsersDocument } from "../../services/firebase";
 import { useDispatch } from "react-redux";
 import { toggleModal } from "../../redux/slices/modal";
 import { addUser } from "../../redux/slices/user-data";
@@ -25,10 +25,18 @@ const Form = ({ data }) => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const formHandler = (e) => {
+  const FormHandler = async (e) => {
     e.preventDefault();
     userDocument(formFields);
     dispatch(toggleModal());
+
+    try {
+      const users = await getUsersDocument();
+      dispatch(addUser(users));
+    } catch (error) {
+      console.error(error)
+    }
+    
   };
 
   return (
@@ -75,7 +83,7 @@ const Form = ({ data }) => {
       />
       <br />
 
-      <button onClick={formHandler}>
+      <button onClick={FormHandler}>
         {buttonType.charAt(0).toUpperCase() + buttonType.slice(1)}
       </button>
     </form>
