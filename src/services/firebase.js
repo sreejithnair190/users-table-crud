@@ -5,7 +5,8 @@ import {
   doc,
   addDoc,
   setDoc,
-  getDocs
+  getDocs,
+  deleteDoc
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -55,5 +56,16 @@ export const getUsersDocument = async () => {
     return usersData;
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const deleteUserDocument = async (userId) => {
+  const usersCollection = collection(db, "users");
+  const userDocRef = doc(usersCollection, userId);
+
+  try {
+    await deleteDoc(userDocRef);
+  } catch (error) {
+    console.error("Error deleting document: ", error);
   }
 };
