@@ -3,7 +3,10 @@ import { toggleModal } from "./../../redux/slices/modal";
 import "./modal.css";
 import Form from "../Form/form";
 import { useState } from "react";
-import { deleteUserDocument, getUsersDocument } from "./../../services/firebase";
+import {
+  deleteUserDocument,
+  getUsersDocument,
+} from "./../../services/firebase";
 import { addUser } from "../../redux/slices/user-data";
 
 const Modal = ({ modalType, data }) => {
@@ -16,9 +19,9 @@ const Modal = ({ modalType, data }) => {
   const handleDeleteRecord = async (e) => {
     try {
       const id = e.target.closest("tr").id;
-      if(!id){ 
+      if (!id) {
         dispatch(toggleModal());
-        return; 
+        return;
       }
       await deleteUserDocument(id);
       setType("");
@@ -63,17 +66,23 @@ const Modal = ({ modalType, data }) => {
               {type === modalTypes[1] && <Form data={data} />}
               {type === modalTypes[2] && (
                 <div className="delete_message">
-                  Are You Sure you want to delete?
-                  <button
-                    id="update"
-                    type="button"
-                    onClick={handleDeleteRecord}
-                  >
-                    Yes
-                  </button>
-                  <button id="delete" type="button" onClick={handleCloseModal}>
-                    No
-                  </button>
+                  Are you sure you want to delete?
+                  <div className="options">
+                    <button
+                      className="yes_option"
+                      type="button"
+                      onClick={handleDeleteRecord}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      className="no_option"
+                      type="button"
+                      onClick={handleCloseModal}
+                    >
+                      No
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -82,7 +91,7 @@ const Modal = ({ modalType, data }) => {
                 className="close-modal"
                 onClick={handleCloseModal}
               >
-                Close
+                X
               </button>
             </div>
           </div>

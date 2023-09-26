@@ -48,18 +48,22 @@ button#add:hover{
   background-color: #2121c0;
 }
 
-button#update{
+button#update, .yes_option{
   background-color: #04aa6d;
 }
 
-button#update:hover{
+button#update:hover, .yes_option:hover{
   background-color: #45a049;
 }
 
-button#delete, .close-modal{
+.close-modal{
+  width: 10%;
+}
+
+button#delete, .close-modal, .no_option{
   background-color: rgb(211 30 30);
 }
 
-button#delete:hover, .close-modal:hover{
+button#delete:hover, .close-modal:hover, .no_option:hover{
   background-color: rgb(172, 26, 26);
 }

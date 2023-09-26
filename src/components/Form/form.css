@@ -41,3 +41,7 @@ label {
 .form_error{
   color: red;
 }
+
+.delete_message{
+  padding-top: 13%;
+}
